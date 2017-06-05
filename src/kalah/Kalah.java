@@ -21,35 +21,29 @@ public class Kalah {
 	public void play(IO io) {
 		Board board = new Board(HOUSES_PER_PLAYER,SEEDS_PER_HOUSE,io);
 		
-		boolean continuePlaying = true;
-		boolean gameCompleted = false;
 		String userInput;
 		Player currentPlayer = FIRST_PLAYER_TURN;
 		
-		while(continuePlaying) {
+		while(true) {
 			if(board.gameOver(currentPlayer)) {
-				gameCompleted = true;
 				KalahIO.renderBoard(board, io);
 				KalahIO.endGame(board,io);
+				KalahIO.displayResults(io, board.getFinalPlayerScore(Player.ONE), board.getFinalPlayerScore(Player.TWO));
 				break;
 			}
-			KalahIO.renderBoard(board, io);
-			if(!gameCompleted){
-				userInput = KalahIO.getPlayerInput(currentPlayer, io);
 			
-				if(KalahIO.userEndsGame(userInput)){
-					continuePlaying = false;
-					KalahIO.endGame(board,io);
-				} else {
-					currentPlayer = board.playerTurn(Integer.parseInt(userInput), currentPlayer);
-				}
+			KalahIO.renderBoard(board, io);
+			userInput = KalahIO.getPlayerInput(currentPlayer, io);
+		
+			if(KalahIO.userEndsGame(userInput)){
+				KalahIO.endGame(board,io);
+				break;
+			} else {
+				currentPlayer = board.playerTurn(Integer.parseInt(userInput), currentPlayer);
 			}
 				
 		}
 		
-		if(gameCompleted){
-			KalahIO.displayResults(io, board.getFinalPlayerScore(Player.ONE), board.getFinalPlayerScore(Player.TWO));
-		}
 		
 	}
 }
