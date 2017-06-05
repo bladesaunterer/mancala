@@ -21,8 +21,11 @@ public class Kalah {
 	}
 	
 	public void play(IO io) {
-		KalahPlayerInput playerOne = new HumanPlayer(); 
-		KalahPlayerInput playerTwo = new HumanPlayer();
+		this.play(io, new HumanPlayer(Player.ONE,io), new HumanPlayer(Player.TWO, io));
+	
+	}
+	
+	private void play(IO io, KalahPlayerInput playerOne, KalahPlayerInput playerTwo ) {
 		Board board = new Board(HOUSES_PER_PLAYER,SEEDS_PER_HOUSE,io);
 		
 		String playerInput;
@@ -38,7 +41,7 @@ public class Kalah {
 			
 			KalahIO.renderBoard(board, io);
 			
-			playerInput = (currentPlayer == Player.ONE) ? playerOne.getPlayerInput(currentPlayer, io) : playerTwo.getPlayerInput(currentPlayer, io) ;
+			playerInput = (currentPlayer == Player.ONE) ? playerOne.getPlayerInput() : playerTwo.getPlayerInput() ;
 		
 			if(KalahIO.userEndsGame(playerInput)){
 				KalahIO.endGame(board,io);
@@ -48,7 +51,6 @@ public class Kalah {
 			}
 				
 		}
-		
 		
 	}
 }
