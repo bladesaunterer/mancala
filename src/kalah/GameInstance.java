@@ -6,21 +6,21 @@ import kalah.util.KalahOutput;
 import kalah.util.KalahPlayerInput;
 
 public class GameInstance {
-	private static final int HOUSES_PER_PLAYER = 6;
+	
 	private static final Player FIRST_PLAYER_TURN = Player.ONE;
-	private int seedsPerHouse;
+	private Board board;
 	private KalahPlayerInput playerOne, playerTwo;
 	private IO io;
 	
-	public GameInstance(IO io,KalahPlayerInput playerOne, KalahPlayerInput playerTwo, int seedsPerHouse ) {
+	public GameInstance(IO io,KalahPlayerInput playerOne, KalahPlayerInput playerTwo, Board board ) {
 		this.io = io;
 		this.playerOne = playerOne;
 		this.playerTwo = playerTwo;
-		this.seedsPerHouse = seedsPerHouse;
+		this.board = board;
 	}
 	
 	public void play() {
-		Board board = new Board(HOUSES_PER_PLAYER,seedsPerHouse,io);
+		
 		KalahOutput outputRenderer = new KalahOutput(board, io);
 		
 		String playerInput;

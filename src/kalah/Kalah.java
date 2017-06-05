@@ -10,12 +10,15 @@ import kalah.util.HumanPlayer;
  */
 public class Kalah {
 	private static final int SEEDS_PER_HOUSE = 4;
+	private static final int HOUSES_PER_PLAYER = 6;
 	
 	public static void main(String[] args) {
 		new Kalah().play(new MockIO());
 	}
 	
 	public void play(IO io) {
-		new GameInstance(io, new HumanPlayer(Player.ONE, io), new HumanPlayer(Player.TWO, io), SEEDS_PER_HOUSE).play();
+		KalahVariantGameLogic gameLogic = new AClockwiseStandardKalahVariant(HOUSES_PER_PLAYER, io);
+		Board board = new Board(HOUSES_PER_PLAYER,SEEDS_PER_HOUSE, gameLogic);
+		new GameInstance(io, new HumanPlayer(Player.ONE, io), new HumanPlayer(Player.TWO, io), board).play();
 	}
 }
