@@ -29,7 +29,7 @@ public class Board implements KalahBoardInfoRetriever {
 	}
 
 	@Override
-	public List<SeedContainer> getSeedContainers(Player player) {
+	public List<SeedContainer> getPlayerSeedContainers(Player player) {
 		if(player == Player.ONE){
 			return playerOne.getSeedContainers();
 		} else {

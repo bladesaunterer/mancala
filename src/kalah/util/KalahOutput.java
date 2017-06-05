@@ -17,14 +17,13 @@ public class KalahOutput {
 	
 	public KalahOutput(KalahBoardInfoRetriever board, IO io) {
 		this.board = board;
-		this.io = io;
-		
+		this.io = io;	
 	}
 	
 	
 	public void renderBoard() {
-		List<SeedContainer> playerOne = board.getSeedContainers(Player.ONE);
-		List<SeedContainer> playerTwo = board.getSeedContainers(Player.TWO);
+		List<SeedContainer> playerOne = board.getPlayerSeedContainers(Player.ONE);
+		List<SeedContainer> playerTwo = board.getPlayerSeedContainers(Player.TWO);
 		
 		int numOfHouses = board.getNumberOfHouses();
 		String outerBoundary = "+----"+ new String(new char[numOfHouses]).replace("\0", "+-------") + "+----+";
@@ -64,7 +63,11 @@ public class KalahOutput {
 		io.println(TRY_AGAIN_MESSAGE);
 	}
 	
-	public void displayResults(int playerOneScore, int playerTwoScore) {
+	public void displayResults() {
+		int playerOneScore  = board.getFinalPlayerScore(Player.ONE);
+		int playerTwoScore = board.getFinalPlayerScore(Player.TWO);
+		
+		
 		io.println(String.format("\tplayer 1:%d", playerOneScore));
 		io.println(String.format("\tplayer 2:%d", playerTwoScore));
 		if(playerOneScore > playerTwoScore){
