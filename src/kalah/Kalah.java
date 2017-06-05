@@ -4,7 +4,7 @@ import com.qualitascorpus.testsupport.IO;
 import com.qualitascorpus.testsupport.MockIO;
 
 import kalah.util.HumanPlayer;
-import kalah.util.KalahIO;
+import kalah.util.KalahOutput;
 import kalah.util.KalahPlayerInput;
 
 /**
@@ -27,24 +27,25 @@ public class Kalah {
 	
 	private void play(IO io, KalahPlayerInput playerOne, KalahPlayerInput playerTwo ) {
 		Board board = new Board(HOUSES_PER_PLAYER,SEEDS_PER_HOUSE,io);
+		KalahOutput output = new KalahOutput(board, io);
 		
 		String playerInput;
 		Player currentPlayer = FIRST_PLAYER_TURN;
 		
 		while(true) {
 			if(board.gameOver(currentPlayer)) {
-				KalahIO.renderBoard(board, io);
-				KalahIO.endGame(board,io);
-				KalahIO.displayResults(io, board.getFinalPlayerScore(Player.ONE), board.getFinalPlayerScore(Player.TWO));
+				output.renderBoard();
+				output.endGame();
+				output.displayResults(board.getFinalPlayerScore(Player.ONE), board.getFinalPlayerScore(Player.TWO));
 				break;
 			}
 			
-			KalahIO.renderBoard(board, io);
+			output.renderBoard();
 			
 			playerInput = (currentPlayer == Player.ONE) ? playerOne.getPlayerInput() : playerTwo.getPlayerInput() ;
 		
-			if(KalahIO.userEndsGame(playerInput)){
-				KalahIO.endGame(board,io);
+			if(output.userEndsGame(playerInput)){
+				output.endGame();
 				break;
 			} else {
 				currentPlayer = board.playerTurn(Integer.parseInt(playerInput), currentPlayer);

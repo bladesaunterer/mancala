@@ -5,7 +5,7 @@ import java.util.List;
 import com.qualitascorpus.testsupport.IO;
 
 import kalah.components.SeedContainer;
-import kalah.util.KalahIO;
+import kalah.util.KalahOutput;
 
 public class Board implements KalahBoardInfoRetriever {
 	private PlayerHold playerOne;
@@ -44,7 +44,7 @@ public class Board implements KalahBoardInfoRetriever {
 		if(currentPlayer == Player.ONE){
 			int seeds = playerOne.removeSeedsFromHouse(houseSelection);
 			if(seeds == 0){
-				KalahIO.pleaseTryAgain(io);
+				KalahOutput.pleaseTryAgain(io);
 				return currentPlayer;
 			}
 			boolean captureOccurs = false;
@@ -99,7 +99,7 @@ public class Board implements KalahBoardInfoRetriever {
 		} else {
 			int seeds = playerTwo.removeSeedsFromHouse(houseSelection);
 			if(seeds == 0){
-				KalahIO.pleaseTryAgain(io);
+				KalahOutput.pleaseTryAgain(io);
 				return currentPlayer;
 			}
 			boolean captureOccurs = false;
