@@ -16,7 +16,6 @@ public class PlayerHold {
 			seedContainers.add(new House(seedsPerHouse));
 		}
 		seedContainers.add(new Store(INITIAL_SCORE));
-		
 	}
 	
 	
@@ -49,12 +48,12 @@ public class PlayerHold {
 		return numberOfSeeds;
 	}
 	
-	public int getNumOfSeedsAtIndex(int index) {
-		return seedContainers.get(index).getNumOfSeeds();
+	public int getNumOfSeedsInHouse(int houseNumber) {
+		return seedContainers.get(houseNumber-1).getNumOfSeeds();
 	}
 	
-	public void incrementSeedsAtIndex(int index) {
-		seedContainers.get(index).increment();
+	public void incrementSeedsInHouse(int houseNumber) {
+		seedContainers.get(houseNumber-1).increment();
 	}
 	
 	public void addToPlayerStore(int seeds) {

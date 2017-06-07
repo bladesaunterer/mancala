@@ -13,6 +13,7 @@ public class AClockwiseStandardKalahVariant extends KalahVariantGameLogic {
 	@Override
 	public Player playerTurn(PlayerHold playerOneHold, PlayerHold playerTwoHold, int houseSelection,
 			Player currentPlayer) {
+		boolean captureOccurs = false;
 
 		if(currentPlayer == Player.ONE){
 			int seeds = playerOneHold.removeSeedsFromHouse(houseSelection);
@@ -20,7 +21,7 @@ public class AClockwiseStandardKalahVariant extends KalahVariantGameLogic {
 				KalahOutput.pleaseTryAgain(io);
 				return currentPlayer;
 			}
-			boolean captureOccurs = false;
+			
 			
 			//Determines if last seed lands in player store
 			if((houseSelection + seeds - 1) == housesPerPlayer) {
@@ -31,40 +32,42 @@ public class AClockwiseStandardKalahVariant extends KalahVariantGameLogic {
 			
 		
 			
-			int index = houseSelection;
+			int currentSeedContainer = houseSelection;
 			PlayerHold playerSewingSeeds = playerOneHold;
 			
-
+			//distribute seeds
 			while(seeds>0){
-				if(playerSewingSeeds == playerTwoHold && index==housesPerPlayer){
-					index = 0;
+				if(playerSewingSeeds == playerTwoHold && currentSeedContainer==housesPerPlayer){
+					currentSeedContainer = 0;
 					playerSewingSeeds = playerOneHold;
 				}
 
-				playerSewingSeeds.incrementSeedsAtIndex(index);
+				playerSewingSeeds.incrementSeedsInHouse(currentSeedContainer+1);
 				
-				
+				//checking if capture occurs, triggered by fact that last seed is being sewn
 				if(seeds == 1
-						&& index != housesPerPlayer
+						&& currentSeedContainer != housesPerPlayer
 						&& playerSewingSeeds == playerOneHold
-						&& playerSewingSeeds.getNumOfSeedsAtIndex(index) == 1
-						&& playerTwoHold.getNumOfSeedsAtIndex(housesPerPlayer - index - 1) >0) {
+						&& playerSewingSeeds.getNumOfSeedsInHouse(currentSeedContainer+1) == 1
+						&& playerTwoHold.getNumOfSeedsInHouse(housesPerPlayer - currentSeedContainer) >0) {
 					captureOccurs = true;
 				}
 				
-				if(index == housesPerPlayer) {
-					index = 0;
+				//determine where seeds distributed next
+				if(currentSeedContainer == housesPerPlayer) {
+					currentSeedContainer = 0;
 					playerSewingSeeds = (playerSewingSeeds == playerOneHold) ? playerTwoHold:playerOneHold;
 				}else{
-					index++;
+					currentSeedContainer++;
 				}
 				
 				seeds--;
 			}
 			
+			//perform steal
 			if(captureOccurs){
-				int capturedSeeds = playerTwoHold.removeSeedsFromHouse(housesPerPlayer-index+1);
-				int seedAtLastIndex = playerOneHold.removeSeedsFromHouse(index);
+				int capturedSeeds = playerTwoHold.removeSeedsFromHouse(housesPerPlayer-currentSeedContainer+1);
+				int seedAtLastIndex = playerOneHold.removeSeedsFromHouse(currentSeedContainer);
 				
 				playerOneHold.addToPlayerStore(capturedSeeds+seedAtLastIndex);
 			}
@@ -75,7 +78,6 @@ public class AClockwiseStandardKalahVariant extends KalahVariantGameLogic {
 				KalahOutput.pleaseTryAgain(io);
 				return currentPlayer;
 			}
-			boolean captureOccurs = false;
 			
 			//Determines if last seed lands in player store
 			if((houseSelection + seeds - 1) == housesPerPlayer) {
@@ -86,43 +88,44 @@ public class AClockwiseStandardKalahVariant extends KalahVariantGameLogic {
 
 			
 			
-			int index = houseSelection;
+			int currentSeedContainer = houseSelection;
 			PlayerHold playerSewingSeeds = playerTwoHold;
 			
 
 			while(seeds>0){
-				if(playerSewingSeeds == playerOneHold && index==housesPerPlayer){
-					index = 0;
+				if(playerSewingSeeds == playerOneHold && currentSeedContainer==housesPerPlayer){
+					currentSeedContainer = 0;
 					playerSewingSeeds = playerTwoHold;
 				}
 				
 				
-				playerSewingSeeds.incrementSeedsAtIndex(index);
+				playerSewingSeeds.incrementSeedsInHouse(currentSeedContainer+1);
 				
 				if(seeds == 1
-						&& index != housesPerPlayer
+						&& currentSeedContainer != housesPerPlayer
 						&& playerSewingSeeds == playerTwoHold
-						&& playerSewingSeeds.getNumOfSeedsAtIndex(index) == 1
-						&& playerOneHold.getNumOfSeedsAtIndex(housesPerPlayer - index - 1) >0
+						&& playerSewingSeeds.getNumOfSeedsInHouse(currentSeedContainer+1) == 1
+						&& playerOneHold.getNumOfSeedsInHouse(housesPerPlayer - currentSeedContainer) >0
 						) {
 					captureOccurs = true;
 				}
 			
 				
-				if(index == housesPerPlayer) {
-					index = 0;
+				if(currentSeedContainer == housesPerPlayer) {
+					currentSeedContainer = 0;
 					playerSewingSeeds= (playerSewingSeeds == playerOneHold) ? playerTwoHold:playerOneHold;
 					
 				}else{
-					index++;
+					currentSeedContainer++;
 				}
 				
 				seeds--;
 			}
 			
+		
 			if(captureOccurs){
-				int capturedSeeds = playerOneHold.removeSeedsFromHouse(housesPerPlayer-index+1);
-				int seedAtLastIndex = playerTwoHold.removeSeedsFromHouse(index);
+				int capturedSeeds = playerOneHold.removeSeedsFromHouse(housesPerPlayer-currentSeedContainer+1);
+				int seedAtLastIndex = playerTwoHold.removeSeedsFromHouse(currentSeedContainer);
 				playerTwoHold.addToPlayerStore(capturedSeeds+seedAtLastIndex);
 			}
 			
