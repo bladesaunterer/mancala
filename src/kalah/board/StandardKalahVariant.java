@@ -14,7 +14,6 @@ public class StandardKalahVariant extends KalahVariantGameLogic {
 	@Override
 	public Player playerTurn(PlayerHold playerOneHold, PlayerHold playerTwoHold, int houseSelection,
 			Player currentPlayer, KalahTraversable boardTraverser) {
-		boolean captureOccurs = false;
 		int seedsToDistribute = 0;
 
 		if(currentPlayer == Player.ONE){
@@ -46,16 +45,7 @@ public class StandardKalahVariant extends KalahVariantGameLogic {
 				}
 
 				playerSewingSeeds.incrementSeedsInHouse(currentSeedContainer+1);
-				
-				// TODO checking if capture occurs, triggered by fact that last seed is being sewn - factor this out
-				// should be dependent on opposite house and if it is a valid thing to steal from capture rule remains consistent
-//				if(seeds == 1
-//						&& currentSeedContainer != housesPerPlayer
-//						&& playerSewingSeeds == playerOneHold
-//						&& playerSewingSeeds.getNumOfSeedsInHouse(currentSeedContainer+1) == 1
-//						&& playerTwoHold.getNumOfSeedsInHouse(housesPerPlayer - currentSeedContainer) > 0) {
-//					captureOccurs = true;
-//				}
+
 				
 				//determine where seeds distributed next
 				KalahTraversalState traversalState = new KalahTraversalState((playerSewingSeeds == playerOneHold) ? Player.ONE : Player.TWO,currentSeedContainer);
@@ -109,18 +99,6 @@ public class StandardKalahVariant extends KalahVariantGameLogic {
 				
 				playerSewingSeeds.incrementSeedsInHouse(currentSeedContainer+1);
 				
-//				if(seeds == 1
-//						&& currentSeedContainer != housesPerPlayer
-//						&& playerSewingSeeds == playerTwoHold
-//						&& playerSewingSeeds.getNumOfSeedsInHouse(currentSeedContainer+1) == 1
-//						&& playerOneHold.getNumOfSeedsInHouse(housesPerPlayer - currentSeedContainer) >0
-//						) {
-//					captureOccurs = true;
-//				}
-				
-
-			
-				//Change KalahTraversal State, set player sewing seeds, change current seedContainer
 				
 				
 				
@@ -160,9 +138,32 @@ public class StandardKalahVariant extends KalahVariantGameLogic {
 		int seeds = seedsPriorToDistribution;
 		boolean captureOccurs = false;
 		
-		System.out.println(seeds);
 		
-		int numOfLoops = seeds/(housesPerPlayer*2+1);
+		int numOfLoops = 0;
+		
+		int oppositeHouse =housesPerPlayer-houseSelection +1;
+		
+		int y = houseSelection + (oppositeHouse*2);
+		int z =0;
+		
+		
+		while (z < seedsPriorToDistribution)
+			z+=y;
+		
+		z-=y;
+		int x=0;
+		
+		if(z>=y)
+			x= z - (houseSelection + (oppositeHouse*2)) + (housesPerPlayer*2+1);
+		
+		
+//		System.out.println(houseSelection);
+//		System.out.println(oppositeHouse);
+//		System.out.println(x);
+		
+		if (x>housesPerPlayer*2 && x%(housesPerPlayer*2+1)==0){
+			numOfLoops = x/(housesPerPlayer*2+1);
+		}
 		seeds += numOfLoops;
 		
 		while(seeds > 0) {
@@ -173,11 +174,6 @@ public class StandardKalahVariant extends KalahVariantGameLogic {
 			
 			
 			if(seeds == 1) {
-//				
-				
-//				
-//				System.out.println(stateAfterDistribution.getCurrentPlayerHoldSeedsDistributed());
-//				System.out.println(stateAfterDistribution.getCurrentSeedContainerBeingSewnForPlayer());
 				
 				
 				if(stateAfterDistribution.getCurrentPlayerHoldSeedsDistributed() != currentPlayer) {
@@ -185,21 +181,13 @@ public class StandardKalahVariant extends KalahVariantGameLogic {
 					return false;
 				}
 				
-//				int houseLastSewn = stateAfterDistribution.getCurrentSeedContainerBeingSewnForPlayer();
-//				if(houseLastSewn < housesPerPlayer 
-//						&& currentSeedHoldSewn.getNumOfSeedsInHouse(houseLastSewn+1) == 0
-//						&& otherPlayer.getNumOfSeedsInHouse(housesPerPlayer - stateAfterDistribution.getCurrentSeedContainerBeingSewnForPlayer()+1) > 0)
-//					return true;
-				
+
 				int houseOne = stateAfterDistribution.getCurrentSeedContainerBeingSewnForPlayer();
 				int otherHouse = housesPerPlayer - stateAfterDistribution.getCurrentSeedContainerBeingSewnForPlayer()+1;
 				if(houseOne == 0 || houseOne == housesPerPlayer+1 ){
 					
 					return false;
 				}else {
-//					System.out.println("reached");
-					System.out.println(currentSeedHoldSewn.getNumOfSeedsInHouse(houseOne));
-					System.out.println(otherPlayer.getNumOfSeedsInHouse(otherHouse));
 					return (currentSeedHoldSewn.getNumOfSeedsInHouse(houseOne) ==1 
 							&& otherPlayer.getNumOfSeedsInHouse(otherHouse) >0 );
 				}
@@ -212,60 +200,7 @@ public class StandardKalahVariant extends KalahVariantGameLogic {
 		
 		
 		return captureOccurs;
-		
-		
-		
-		
-		
-		
-//		Player playerToLastDistributeSeed = stateAfterDistribution.getCurrentPlayerHoldSeedsDistributed();
-//		int seedContainerDistributed = stateAfterDistribution.getCurrentSeedContainerBeingSewnForPlayer();
-//		System.out.println(stateAfterDistribution.getCurrentPlayerHoldSeedsDistributed());
-//		System.out.println(seedContainerDistributed);
-//		System.out.println(housesPerPlayer - seedContainerDistributed +1);
-//		
-//		if(playerToLastDistributeSeed != currentPlayer)
-//			return false;
-//		
-//		if(seedContainerDistributed <= housesPerPlayer){
-//			if(currentPlayer == Player.ONE){
-//				captureOccurs  = pOneHold.getNumOfSeedsInHouse(seedContainerDistributed) == 1 && pTwoHold.getNumOfSeedsInHouse(housesPerPlayer - seedContainerDistributed +1) >0;
-//				System.out.println(captureOccurs);
-//				return captureOccurs;
-//			}else {
-//				captureOccurs = pTwoHold.getNumOfSeedsInHouse(seedContainerDistributed) == 1 && pOneHold.getNumOfSeedsInHouse(housesPerPlayer - seedContainerDistributed +1) >0;
-//				System.out.println(captureOccurs);
-//				return captureOccurs;
-//			}
-//		}
-//		
-//		
-//		return false;
-		
-		
 
-		
-		
-//		if(playerToLastDistributeSeed == Player.ONE 
-//				&& pOneHold.getNumOfSeedsInHouse(seedContainerDistributed) == 1
-//				&& seedContainerDistributed != housesPerPlayer){
-//			captureOccurs = pTwoHold.getNumOfSeedsInHouse(housesPerPlayer - seedContainerDistributed) > 0;
-//		}else if (seedContainerDistributed != housesPerPlayer
-//				&& pTwoHold.getNumOfSeedsInHouse(seedContainerDistributed) == 1) {
-//			captureOccurs = pOneHold.getNumOfSeedsInHouse(housesPerPlayer - seedContainerDistributed) > 0;
-//			
-//		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		return captureOccurs;
 		
 	}
 	
