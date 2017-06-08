@@ -2,7 +2,6 @@ package kalah;
 
 import com.qualitascorpus.testsupport.IO;
 
-import kalah.board.AClockwiseTraversal;
 import kalah.board.Board;
 import kalah.board.KalahTraversable;
 import kalah.board.Player;
