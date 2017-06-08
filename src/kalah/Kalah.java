@@ -3,7 +3,8 @@ package kalah;
 import com.qualitascorpus.testsupport.IO;
 import com.qualitascorpus.testsupport.MockIO;
 
-import kalah.board.AClockwiseStandardKalahVariant;
+import kalah.board.StandardKalahVariant;
+import kalah.board.AClockwiseTraversal;
 import kalah.board.Board;
 import kalah.board.KalahVariantGameLogic;
 import kalah.board.Player;
@@ -21,8 +22,8 @@ public class Kalah {
 	}
 	
 	public void play(IO io) {
-		KalahVariantGameLogic gameLogic = new AClockwiseStandardKalahVariant(HOUSES_PER_PLAYER, io);
+		KalahVariantGameLogic gameLogic = new StandardKalahVariant(HOUSES_PER_PLAYER, io);
 		Board board = new Board(HOUSES_PER_PLAYER,SEEDS_PER_HOUSE, gameLogic);
-		new GameInstance(io, new HumanPlayer(Player.ONE, io), new HumanPlayer(Player.TWO, io), board).play();
+		new GameInstance(io, new HumanPlayer(Player.ONE, io), new HumanPlayer(Player.TWO, io), board, new AClockwiseTraversal()).play();
 	}
 }

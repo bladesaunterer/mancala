@@ -17,6 +17,7 @@ public abstract class KalahVariantGameLogic {
 	}
 	
 	
-	public abstract Player playerTurn(PlayerHold playerOneHold, PlayerHold playerTwoHold, int houseSelection, Player currentPlayer); 
+	public abstract Player playerTurn(PlayerHold playerOneHold, PlayerHold playerTwoHold, int houseSelection, Player currentPlayer, KalahTraversable boardTraverser);
+
 	
 }

@@ -2,7 +2,9 @@ package kalah;
 
 import com.qualitascorpus.testsupport.IO;
 
+import kalah.board.AClockwiseTraversal;
 import kalah.board.Board;
+import kalah.board.KalahTraversable;
 import kalah.board.Player;
 import kalah.util.KalahOutput;
 import kalah.util.KalahPlayerInput;
@@ -13,12 +15,14 @@ public class GameInstance {
 	private Board board;
 	private KalahPlayerInput playerOne, playerTwo;
 	private IO io;
+	private KalahTraversable boardTraverser;
 	
-	public GameInstance(IO io,KalahPlayerInput playerOne, KalahPlayerInput playerTwo, Board board ) {
+	public GameInstance(IO io,KalahPlayerInput playerOne, KalahPlayerInput playerTwo, Board board, KalahTraversable boardTraverser ) {
 		this.io = io;
 		this.playerOne = playerOne;
 		this.playerTwo = playerTwo;
 		this.board = board;
+		this.boardTraverser = boardTraverser;
 	}
 	
 	public void play() {
@@ -44,7 +48,7 @@ public class GameInstance {
 				outputRenderer.endGame();
 				break;
 			} else {
-				currentPlayer = board.playerTurn(Integer.parseInt(playerInput), currentPlayer);
+				currentPlayer = board.playerTurn(Integer.parseInt(playerInput), currentPlayer, boardTraverser);
 			}
 				
 		}

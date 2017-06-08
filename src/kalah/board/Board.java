@@ -40,8 +40,8 @@ public class Board implements KalahBoardInfoRetriever {
 	/*
 	 * Changes state of board and returns player whose turn is next
 	 */
-	public Player playerTurn(int houseSelection, Player currentPlayer) {
-		return gameLogic.playerTurn(playerOne, playerTwo, houseSelection, currentPlayer); 
+	public Player playerTurn(int houseSelection, Player currentPlayer, KalahTraversable boardTraverser) {
+		return gameLogic.playerTurn(playerOne, playerTwo, houseSelection, currentPlayer, boardTraverser); 
 	}
 	
 
