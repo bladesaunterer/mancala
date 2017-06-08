@@ -6,8 +6,8 @@ import com.qualitascorpus.testsupport.MockIO;
 import kalah.board.AClockwiseTraversal;
 import kalah.board.Board;
 import kalah.board.KalahStandardLogic;
-import kalah.board.KalahVariantGameLogic;
 import kalah.board.Player;
+import kalah.board.interfaces.KalahVariantGameLogic;
 import kalah.util.HumanPlayer;
 
 /**

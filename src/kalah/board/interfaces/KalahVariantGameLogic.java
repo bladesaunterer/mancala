@@ -1,5 +1,6 @@
-package kalah.board;
+package kalah.board.interfaces;
 
+import kalah.board.Player;
 import kalah.components.PlayerHold;
 
 

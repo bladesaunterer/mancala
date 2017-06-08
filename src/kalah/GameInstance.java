@@ -3,8 +3,8 @@ package kalah;
 import com.qualitascorpus.testsupport.IO;
 
 import kalah.board.Board;
-import kalah.board.KalahTraversable;
 import kalah.board.Player;
+import kalah.board.interfaces.KalahTraversable;
 import kalah.util.KalahOutput;
 import kalah.util.KalahPlayerInput;
 

@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.qualitascorpus.testsupport.IO;
 
-import kalah.board.KalahBoardInfoRetriever;
 import kalah.board.Player;
+import kalah.board.interfaces.KalahBoardInfoRetriever;
 import kalah.components.SeedContainer;
 
 public class KalahOutput {

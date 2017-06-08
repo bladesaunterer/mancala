@@ -1,7 +1,8 @@
-package kalah.board;
+package kalah.board.interfaces;
 
 import java.util.List;
 
+import kalah.board.Player;
 import kalah.components.SeedContainer;
 
 public interface KalahBoardInfoRetriever {

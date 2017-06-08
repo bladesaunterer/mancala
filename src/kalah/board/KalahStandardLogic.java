@@ -2,6 +2,8 @@ package kalah.board;
 
 import com.qualitascorpus.testsupport.IO;
 
+import kalah.board.interfaces.KalahTraversable;
+import kalah.board.interfaces.KalahVariantGameLogic;
 import kalah.components.PlayerHold;
 import kalah.util.KalahOutput;
 

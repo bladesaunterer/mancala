@@ -1,5 +1,7 @@
 package kalah.board;
 
+import kalah.board.interfaces.KalahTraversable;
+
 public class AClockwiseTraversal implements KalahTraversable {
 	public KalahTraversalState getNextTraversalState(KalahTraversalState currentTraversalState, int housesPerPlayer, Player currentPlayersTurn){
 		int currentSeedContainer = currentTraversalState.getCurrentSeedContainerBeingSewnForPlayer();

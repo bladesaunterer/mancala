@@ -2,6 +2,9 @@ package kalah.board;
 
 import java.util.List;
 
+import kalah.board.interfaces.KalahBoardInfoRetriever;
+import kalah.board.interfaces.KalahTraversable;
+import kalah.board.interfaces.KalahVariantGameLogic;
 import kalah.components.PlayerHold;
 import kalah.components.SeedContainer;
 
