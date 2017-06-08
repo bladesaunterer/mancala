@@ -1,15 +1,13 @@
-package kalah;
+package kalah.components;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import kalah.components.House;
-import kalah.components.SeedContainer;
-import kalah.components.Store;
-
 public class PlayerHold {
 	private List<SeedContainer> seedContainers = new ArrayList<SeedContainer>();
 	private static final int INITIAL_SCORE = 0;
+	private int lastContainerSeedPlaced = 1;
+	
 	
 	public PlayerHold(int housesPerPlayer, int seedsPerHouse) {
 		for(int i=0; i<housesPerPlayer; i++){
@@ -53,11 +51,18 @@ public class PlayerHold {
 	}
 	
 	public void incrementSeedsInHouse(int houseNumber) {
+		lastContainerSeedPlaced = houseNumber;
 		seedContainers.get(houseNumber-1).increment();
 	}
 	
 	public void addToPlayerStore(int seeds) {
 		((Store)seedContainers.get(seedContainers.size()-1)).addToStore(seeds);
 	}
+	
+	public int getLastContainerSeedPlaced() {
+		return lastContainerSeedPlaced;
+	}
+	
+	
 
 }

@@ -3,8 +3,9 @@ package kalah.util;
 import java.util.List;
 
 import com.qualitascorpus.testsupport.IO;
-import kalah.KalahBoardInfoRetriever;
-import kalah.Player;
+
+import kalah.board.KalahBoardInfoRetriever;
+import kalah.board.Player;
 import kalah.components.SeedContainer;
 
 public class KalahOutput {

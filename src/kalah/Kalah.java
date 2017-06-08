@@ -3,6 +3,10 @@ package kalah;
 import com.qualitascorpus.testsupport.IO;
 import com.qualitascorpus.testsupport.MockIO;
 
+import kalah.board.AClockwiseStandardKalahVariant;
+import kalah.board.Board;
+import kalah.board.KalahVariantGameLogic;
+import kalah.board.Player;
 import kalah.util.HumanPlayer;
 
 /**

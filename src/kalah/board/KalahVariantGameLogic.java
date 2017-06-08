@@ -1,6 +1,8 @@
-package kalah;
+package kalah.board;
 
 import com.qualitascorpus.testsupport.IO;
+
+import kalah.components.PlayerHold;
 
 
 public abstract class KalahVariantGameLogic {

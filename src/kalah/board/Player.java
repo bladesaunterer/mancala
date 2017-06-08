@@ -1,4 +1,4 @@
-package kalah;
+package kalah.board;
 
 public enum Player {
 	ONE(1),TWO(2);

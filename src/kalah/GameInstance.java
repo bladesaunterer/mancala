@@ -2,6 +2,8 @@ package kalah;
 
 import com.qualitascorpus.testsupport.IO;
 
+import kalah.board.Board;
+import kalah.board.Player;
 import kalah.util.KalahOutput;
 import kalah.util.KalahPlayerInput;
 

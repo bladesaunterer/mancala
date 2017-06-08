@@ -1,17 +1,16 @@
-package kalah;
+package kalah.board;
 
 import java.util.List;
 
-import com.qualitascorpus.testsupport.IO;
-
+import kalah.components.PlayerHold;
 import kalah.components.SeedContainer;
-import kalah.util.KalahOutput;
 
 public class Board implements KalahBoardInfoRetriever {
 	private PlayerHold playerOne;
 	private PlayerHold playerTwo;
 	private int housesPerPlayer;
 	private KalahVariantGameLogic gameLogic;
+	private Player seedLastPlaced = Player.ONE;
 	
 	public Board(int housesPerPlayer, int seedsPerHouse, KalahVariantGameLogic gameLogic) {
 		this.playerOne = new PlayerHold(housesPerPlayer, seedsPerHouse);
@@ -31,6 +30,7 @@ public class Board implements KalahBoardInfoRetriever {
 	@Override
 	public List<SeedContainer> getPlayerSeedContainers(Player player) {
 		if(player == Player.ONE){
+			
 			return playerOne.getSeedContainers();
 		} else {
 			return playerTwo.getSeedContainers();
@@ -50,14 +50,21 @@ public class Board implements KalahBoardInfoRetriever {
 	}
 	
 	private int getNumberOfSeedsInHouses(Player player) {
-		if(player == Player.ONE)
+		if(player == Player.ONE){
+			seedLastPlaced = Player.ONE;
 			return playerOne.getNumberOfSeedsInHouses();
-		else 
+		} else { 
+			seedLastPlaced = Player.TWO;
 			return playerTwo.getNumberOfSeedsInHouses();
+		}
 	}
 	
 	public int getNumberOfHouses(){
 		return this.housesPerPlayer;
+	}
+	
+	public Player seedLastPlaced(){
+		return seedLastPlaced;
 	}
 
 }

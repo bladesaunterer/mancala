@@ -2,7 +2,7 @@ package kalah.util;
 
 import com.qualitascorpus.testsupport.IO;
 
-import kalah.Player;
+import kalah.board.Player;
 
 public class HumanPlayer implements KalahPlayerInput {
 	private static final String QUIT_STRING = "q";

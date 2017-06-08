@@ -1,7 +1,8 @@
-package kalah;
+package kalah.board;
 
 import com.qualitascorpus.testsupport.IO;
 
+import kalah.components.PlayerHold;
 import kalah.util.KalahOutput;
 
 public class AClockwiseStandardKalahVariant extends KalahVariantGameLogic {
@@ -44,12 +45,13 @@ public class AClockwiseStandardKalahVariant extends KalahVariantGameLogic {
 
 				playerSewingSeeds.incrementSeedsInHouse(currentSeedContainer+1);
 				
-				//checking if capture occurs, triggered by fact that last seed is being sewn
+				// TODO checking if capture occurs, triggered by fact that last seed is being sewn - factor this out
+				// should be dependent on opposite house and if it is a valid thing to steal from capture rule remains consistent
 				if(seeds == 1
 						&& currentSeedContainer != housesPerPlayer
 						&& playerSewingSeeds == playerOneHold
 						&& playerSewingSeeds.getNumOfSeedsInHouse(currentSeedContainer+1) == 1
-						&& playerTwoHold.getNumOfSeedsInHouse(housesPerPlayer - currentSeedContainer) >0) {
+						&& playerTwoHold.getNumOfSeedsInHouse(housesPerPlayer - currentSeedContainer) > 0) {
 					captureOccurs = true;
 				}
 				
@@ -110,17 +112,24 @@ public class AClockwiseStandardKalahVariant extends KalahVariantGameLogic {
 					captureOccurs = true;
 				}
 			
+				//Change KalahTraversal State, set player sewing seeds, change current seedContainer
 				
-				if(currentSeedContainer == housesPerPlayer) {
-					currentSeedContainer = 0;
-					playerSewingSeeds= (playerSewingSeeds == playerOneHold) ? playerTwoHold:playerOneHold;
-					
-				}else{
-					currentSeedContainer++;
-				}
+				
+				
+				KalahTraversalState traversalState = new KalahTraversalState((playerSewingSeeds == playerOneHold) ? Player.ONE : Player.TWO,currentSeedContainer);
+				//KalahTraverser traverser = new  Traverser() traversal = traverser.getNextState(traversal)
+				KalahTraversable boardTraverser = new AClockwiseTraversal();
+				traversalState = boardTraverser.getNextTraversalState(traversalState, housesPerPlayer);
+				
+				playerSewingSeeds = (traversalState.getCurrentPlayerHoldSeedsDistributed() == Player.ONE) ? playerOneHold:playerTwoHold;
+				currentSeedContainer = traversalState.getCurrentSeedContainerBeingSewnForPlayer();
+				
+
 				
 				seeds--;
 			}
+			
+			
 			
 		
 			if(captureOccurs){
@@ -134,6 +143,33 @@ public class AClockwiseStandardKalahVariant extends KalahVariantGameLogic {
 		
 		return currentPlayer;
 	}
+	
+	
+	
+	
+	private boolean captureOccurs(PlayerHold currentPlayer, int houseSelection, int seedsPriorToDistribution, int housesPerPlayer){
+		//determine if last seed placed on this side
+		boolean lastSeedPlacedInThisPlayersHolding = true;
+		
+		if(houseSelection + seedsPriorToDistribution <= housesPerPlayer ) {
+			lastSeedPlacedInThisPlayersHolding = true;
+		}
+		
+		if(seedsPriorToDistribution + houseSelection > 1  )
+		
+		if(!lastSeedPlacedInThisPlayersHolding) return lastSeedPlacedInThisPlayersHolding;
+		
+		
+		
+		
+		
+		return false;
+		
+	}
+	
+	
+	
+	
 
 
 	
