@@ -17,7 +17,6 @@ public class KalahStandardLogic implements KalahVariantGameLogic {
 	@Override
 	public Player playerTurn(PlayerHold playerOneHold, PlayerHold playerTwoHold, int houseSelection,
 			Player currentPlayer, KalahTraversable boardTraverser) {
-		
 		PlayerHold currentPlayerHold = (currentPlayer == Player.ONE)? playerOneHold: playerTwoHold;
 		
 		int seeds = currentPlayerHold.removeSeedsFromHouse(houseSelection);
@@ -38,8 +37,7 @@ public class KalahStandardLogic implements KalahVariantGameLogic {
 			seeds--;
 		}
 		
-		
-		
+	
 		if(captureOccurs(currentPlayer, traversalState, playerOneHold, playerTwoHold)){
 			PlayerHold thisPlayerHold = traversalState.getCurrentPlayerHoldSeedsDistributed()==Player.ONE ? playerOneHold : playerTwoHold;
 			PlayerHold otherPlayerHold = traversalState.getCurrentPlayerHoldSeedsDistributed()==Player.ONE ? playerTwoHold : playerOneHold;
@@ -55,9 +53,6 @@ public class KalahStandardLogic implements KalahVariantGameLogic {
 			return currentPlayer;
 		else
 			return (currentPlayer==Player.ONE) ? Player.TWO : Player.ONE;
-		
-		
-		
 	}
 	
 	private boolean captureOccurs(Player currentPlayer,KalahTraversalState traversalState, PlayerHold playerOneHold, PlayerHold playerTwoHold){
@@ -79,5 +74,9 @@ public class KalahStandardLogic implements KalahVariantGameLogic {
 		
 		return false;
 	}
+
+
+
+
 
 }
