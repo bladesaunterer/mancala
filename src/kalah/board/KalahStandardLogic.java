@@ -5,10 +5,13 @@ import com.qualitascorpus.testsupport.IO;
 import kalah.components.PlayerHold;
 import kalah.util.KalahOutput;
 
-public class KalahStandardLogic extends KalahVariantGameLogic {
+public class KalahStandardLogic implements KalahVariantGameLogic {
+	int housesPerPlayer;
+	IO io;
 
 	public KalahStandardLogic(int housesPerPlayer, IO io) {
-		super(housesPerPlayer, io);
+		this.io = io;
+		this.housesPerPlayer = housesPerPlayer;
 	}
 
 	@Override
