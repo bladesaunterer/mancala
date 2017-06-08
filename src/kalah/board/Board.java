@@ -14,16 +14,16 @@ public class Board implements KalahBoardInfoRetriever {
 	private int housesPerPlayer;
 	private KalahVariantGameLogic gameLogic;
 	private Player seedLastPlaced = Player.ONE;
-	
+
 	public Board(int housesPerPlayer, int seedsPerHouse, KalahVariantGameLogic gameLogic) {
 		this.playerOne = new PlayerHold(housesPerPlayer, seedsPerHouse);
-		this.playerTwo = new PlayerHold(housesPerPlayer, seedsPerHouse);	
+		this.playerTwo = new PlayerHold(housesPerPlayer, seedsPerHouse);
 		this.housesPerPlayer = housesPerPlayer;
 		this.gameLogic = gameLogic;
 	}
-	
+
 	public int getFinalPlayerScore(Player player) {
-		if(player == Player.ONE){
+		if (player == Player.ONE) {
 			return playerOne.getFinalPlayerScore();
 		} else {
 			return playerTwo.getFinalPlayerScore();
@@ -32,8 +32,8 @@ public class Board implements KalahBoardInfoRetriever {
 
 	@Override
 	public List<SeedContainer> getPlayerSeedContainers(Player player) {
-		if(player == Player.ONE){
-			
+		if (player == Player.ONE) {
+
 			return playerOne.getSeedContainers();
 		} else {
 			return playerTwo.getSeedContainers();
@@ -44,29 +44,28 @@ public class Board implements KalahBoardInfoRetriever {
 	 * Changes state of board and returns player whose turn is next
 	 */
 	public Player playerTurn(int houseSelection, Player currentPlayer, KalahTraversable boardTraverser) {
-		return gameLogic.playerTurn(playerOne, playerTwo, houseSelection, currentPlayer, boardTraverser); 
+		return gameLogic.playerTurn(playerOne, playerTwo, houseSelection, currentPlayer, boardTraverser);
 	}
-	
 
 	public boolean gameOver(Player currentPlayer) {
 		return getNumberOfSeedsInHouses(currentPlayer) == 0;
 	}
-	
+
 	private int getNumberOfSeedsInHouses(Player player) {
-		if(player == Player.ONE){
+		if (player == Player.ONE) {
 			seedLastPlaced = Player.ONE;
 			return playerOne.getNumberOfSeedsInHouses();
-		} else { 
+		} else {
 			seedLastPlaced = Player.TWO;
 			return playerTwo.getNumberOfSeedsInHouses();
 		}
 	}
-	
-	public int getNumberOfHouses(){
+
+	public int getNumberOfHouses() {
 		return this.housesPerPlayer;
 	}
-	
-	public Player seedLastPlaced(){
+
+	public Player seedLastPlaced() {
 		return seedLastPlaced;
 	}
 

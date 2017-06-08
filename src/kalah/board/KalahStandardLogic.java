@@ -29,13 +29,13 @@ public class KalahStandardLogic implements KalahVariantGameLogic {
 		
 		KalahTraversalState traversalState = new KalahTraversalState(currentPlayer, houseSelection); 
 		
-		PlayerHold playerHoldBeingSewn = currentPlayerHold;
+		PlayerHold playerHoldBeingSown = currentPlayerHold;
 		
 		while(seeds >0) {
 			traversalState = boardTraverser.getNextTraversalState(traversalState, housesPerPlayer, currentPlayer);
-			playerHoldBeingSewn = traversalState.getCurrentPlayerHoldSeedsDistributed()==Player.ONE ? playerOneHold : playerTwoHold;
+			playerHoldBeingSown = traversalState.getCurrentPlayerHoldSeedsDistributed()==Player.ONE ? playerOneHold : playerTwoHold;
 		  
-			playerHoldBeingSewn.incrementSeedsInHouse(traversalState.getCurrentSeedContainerBeingSewnForPlayer());
+			playerHoldBeingSown.incrementSeedsInHouse(traversalState.getCurrentSeedContainerBeingSownForPlayer());
 			seeds--;
 		}
 		
@@ -43,15 +43,15 @@ public class KalahStandardLogic implements KalahVariantGameLogic {
 		if(captureOccurs(currentPlayer, traversalState, playerOneHold, playerTwoHold)){
 			PlayerHold thisPlayerHold = traversalState.getCurrentPlayerHoldSeedsDistributed()==Player.ONE ? playerOneHold : playerTwoHold;
 			PlayerHold otherPlayerHold = traversalState.getCurrentPlayerHoldSeedsDistributed()==Player.ONE ? playerTwoHold : playerOneHold;
-			int lastSeedContainerSewn = traversalState.getCurrentSeedContainerBeingSewnForPlayer();
+			int lastSeedContainerSown = traversalState.getCurrentSeedContainerBeingSownForPlayer();
 			
-			int capturedSeeds = otherPlayerHold.removeSeedsFromHouse(housesPerPlayer-lastSeedContainerSewn+1);
-			int seedAtLastIndex = thisPlayerHold.removeSeedsFromHouse(lastSeedContainerSewn);
+			int capturedSeeds = otherPlayerHold.removeSeedsFromHouse(housesPerPlayer-lastSeedContainerSown+1);
+			int seedAtLastIndex = thisPlayerHold.removeSeedsFromHouse(lastSeedContainerSown);
 			
 			thisPlayerHold.addToPlayerStore(capturedSeeds+seedAtLastIndex);
 		}
 		
-		if(traversalState.getCurrentSeedContainerBeingSewnForPlayer() == housesPerPlayer+1)
+		if(traversalState.getCurrentSeedContainerBeingSownForPlayer() == housesPerPlayer+1)
 			return currentPlayer;
 		else
 			return (currentPlayer==Player.ONE) ? Player.TWO : Player.ONE;
@@ -61,16 +61,18 @@ public class KalahStandardLogic implements KalahVariantGameLogic {
 		if (currentPlayer != traversalState.getCurrentPlayerHoldSeedsDistributed())
 			return false;
 		
-		int lastSeedContainerIncremented = traversalState.getCurrentSeedContainerBeingSewnForPlayer();
+		int lastSeedContainerIncremented = traversalState.getCurrentSeedContainerBeingSownForPlayer();
+		int oppositeContainer = housesPerPlayer-lastSeedContainerIncremented+1;
 		
 		if(lastSeedContainerIncremented > housesPerPlayer || lastSeedContainerIncremented < 1)
 			return false;
 		
 		PlayerHold thisPlayerHold = traversalState.getCurrentPlayerHoldSeedsDistributed()==Player.ONE ? playerOneHold : playerTwoHold;
 		PlayerHold otherPlayerHold = traversalState.getCurrentPlayerHoldSeedsDistributed()==Player.ONE ? playerTwoHold : playerOneHold;
+	
 		
 		if(thisPlayerHold.getNumOfSeedsInHouse(lastSeedContainerIncremented) == 1 
-				&& otherPlayerHold.getNumOfSeedsInHouse(housesPerPlayer-lastSeedContainerIncremented+1)>0){
+				&& otherPlayerHold.getNumOfSeedsInHouse(oppositeContainer)>0){
 			return true;
 		}
 		

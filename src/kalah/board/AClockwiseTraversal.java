@@ -4,16 +4,16 @@ import kalah.board.interfaces.KalahTraversable;
 
 public class AClockwiseTraversal implements KalahTraversable {
 	public KalahTraversalState getNextTraversalState(KalahTraversalState currentTraversalState, int housesPerPlayer, Player currentPlayersTurn){
-		int currentSeedContainer = currentTraversalState.getCurrentSeedContainerBeingSewnForPlayer();
-		Player playerSewingSeeds = currentTraversalState.getCurrentPlayerHoldSeedsDistributed();
+		int currentSeedContainer = currentTraversalState.getCurrentSeedContainerBeingSownForPlayer();
+		Player playerSowingSeeds = currentTraversalState.getCurrentPlayerHoldSeedsDistributed();
 		
 		
-		if(playerSewingSeeds != currentPlayersTurn && currentSeedContainer==housesPerPlayer){
+		if(playerSowingSeeds != currentPlayersTurn && currentSeedContainer==housesPerPlayer){
 			currentSeedContainer = 1;
-			playerSewingSeeds = currentPlayersTurn;
+			playerSowingSeeds = currentPlayersTurn;
 		} else if(currentSeedContainer == housesPerPlayer+1) {
 			currentSeedContainer = 1;
-			playerSewingSeeds= (playerSewingSeeds == Player.ONE) ? Player.TWO:Player.ONE;
+			playerSowingSeeds= (playerSowingSeeds == Player.ONE) ? Player.TWO:Player.ONE;
 			
 		}else{
 			currentSeedContainer++;
@@ -21,7 +21,7 @@ public class AClockwiseTraversal implements KalahTraversable {
 		
 		
 		
-		return new KalahTraversalState(playerSewingSeeds, currentSeedContainer);
+		return new KalahTraversalState(playerSowingSeeds, currentSeedContainer);
 		
 	}
 
